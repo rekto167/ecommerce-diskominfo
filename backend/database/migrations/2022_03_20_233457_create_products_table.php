@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->double('price')->default(0);
             $table->longText('desc');
-            $table->bigInteger('categories_id');
+            $table->foreignId('category_id');
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->string('payment_type')->default('MANUAL');
             $table->string('status')->default('PENDING');
-            $table->bigInteger('users_id');
+            $table->foreignId('user_id');
             $table->timestamps();
         });
     }
