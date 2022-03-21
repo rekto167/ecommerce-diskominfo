@@ -11,7 +11,7 @@ class ProductGallery extends Model
     use HasFactory;
 
     protected $fillable = [
-        'url_image',
+        'urlImage',
         'product_id'
     ];
 

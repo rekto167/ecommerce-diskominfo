@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductCategory;
 use App\Models\ProductGallery;
+use App\Models\ProductInventory;
 
 class Product extends Model
 {
@@ -26,5 +27,10 @@ class Product extends Model
     public function gallery()
     {
         return $this->hasMany(ProductGallery::class);
+    }
+
+    public function inventory()
+    {
+        return $this->hasOne(ProductInventory::class);
     }
 }
