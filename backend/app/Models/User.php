@@ -10,6 +10,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Model\UserAddress;
+use App\Model\Payment;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -60,4 +63,14 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function address()
+    {
+        return $this->belongsTo(UserAddress::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }
