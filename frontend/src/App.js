@@ -8,7 +8,7 @@ import Products from './pages/Products';
 const App = () => {
   return(
     <SafeAreaView>
-      <Products />
+      <Register />
     </SafeAreaView>
   )
 }

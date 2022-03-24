@@ -31,12 +31,6 @@ class UserController extends Controller
 
             $user = User::where('email', $request->email)->first();
 
-            if($user){
-                return ResponseFormatter::error([
-                    'message' => 'Your account has been registered',
-                ], 'Unauthorized', 401);
-            }
-
             $tokenResult = $user->createToken('authToken')->plainTextToken;
 
             return ResponseFormatter::success([
