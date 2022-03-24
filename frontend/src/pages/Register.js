@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import {View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native'
+import {View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native'
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -8,6 +10,14 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(()=>{
+        async function checkToken() {
+            let token = await AsyncStorage.getItem('access_token')
+            console.log(token);
+        }
+        checkToken();
+    },[]);
 
     const handleSubmit = async () => {
         try {
@@ -18,8 +28,8 @@ const Register = () => {
                 phone,
                 password
             }
-            await axios.post('http://10.0.2.2:8000/api/register/', data);
-            console.log('berhasil')
+            let response = await axios.post('http://10.0.2.2:8000/api/register/', data);
+            await AsyncStorage.setItem('access_token', response.data.data.access_token)
         } catch (error) {
             console.error(error);
         }
@@ -45,8 +55,8 @@ const Register = () => {
                 <TextInput style={styles.input} placeholder="Enter your phone number" onChangeText={newVal => setPhone(newVal)} />
             </View>
             <View style={styles.containerPass}>
-                <Text style={styles.label}>Password</Text>
-                <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry={true} onChangeText={newVal => setPassword(newVal)} />
+                    <Text style={styles.label}>Password</Text>
+                    <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry={true} onChangeText={newVal => setPassword(newVal)} />
             </View>
             <View style={styles.containerBottomMenu}>
                 <TouchableOpacity style={styles.buttonRegister} onPress={handleSubmit} >
@@ -119,7 +129,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     linkContainer:{
-        marginTop:63,
+        marginTop:30,
         alignItems: 'center'
     },
     textLink:{
