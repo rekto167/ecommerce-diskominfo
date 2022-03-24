@@ -1,20 +1,52 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {View, StyleSheet, Text, TextInput, TouchableOpacity} from 'react-native'
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Login = () => {
+
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
+    useEffect(() => {
+        async function checkToken() {
+            let token = await AsyncStorage.getItem('access_token')
+            console.log(token !== null);
+            console.log(token);
+        }
+        checkToken();
+    },[])
+
+    const handleSubmitLogin = async () => {
+        try {
+            let data = {
+                email,
+                password
+            }
+
+            let responseLogin = await axio.post('http://10.0.2.2:8000/api/login', data);
+
+            await AsyncStorage.setItem('access_token', responseLogin.data.data.access_token);
+
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
     return(
         <View style={styles.container}>
             <Text style={styles.textHeading} >Login</Text>
             <View style={styles.containerEmail}>
                 <Text style={styles.label}>E-mail</Text>
-                <TextInput style={styles.input} placeholder="Enter your email" />
+                <TextInput style={styles.input} placeholder="Enter your email" onChangeText={(value) => setEmail(value)} />
             </View>
             <View style={styles.containerPass}>
                 <Text style={styles.label}>Password</Text>
-                <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry={true} />
+                <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry={true} onChangeText={(value) => setPassword(value)} />
             </View>
             <View style={styles.containerBottomMenu}>
-                <TouchableOpacity style={styles.buttonLogin}>
+                <TouchableOpacity style={styles.buttonLogin} onPress={handleSubmitLogin} >
                     <Text style={styles.labelbtnLogin}>Login</Text>
                 </TouchableOpacity>
                 <View style={styles.linkContainer}>
@@ -39,7 +71,7 @@ const styles = StyleSheet.create({
     },
     containerPass:{
         marginTop:17
-    },  
+    },
     textHeading:{
         fontSize:24,
         fontFamily: 'Poppins-Regular'

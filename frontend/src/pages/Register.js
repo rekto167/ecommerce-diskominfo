@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import {View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform} from 'react-native'
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import KeyboardAvoidingView from 'react-native/Libraries/Components/Keyboard/KeyboardAvoidingView';
 
 const Register = () => {
     const [name, setName] = useState('');
