@@ -14,7 +14,7 @@ const Register = () => {
     useEffect(()=>{
         async function checkToken() {
             let token = await AsyncStorage.getItem('access_token')
-            console.log(token);
+            console.log(token !== null);
         }
         checkToken();
     },[]);
