@@ -26,7 +26,14 @@ const Profile = ({navigation}) => {
             }
         })
         .then((response) => response.json())
-        .then((json) => navigation.navigate('Login'))
+        .then((json) => AsyncStorage.removeItem('access_token'))
+
+        let token = await AsyncStorage.getItem('access_token')
+
+        if(!token){
+            navigation.navigate('Login')
+        }
+
     }
 
     return(
