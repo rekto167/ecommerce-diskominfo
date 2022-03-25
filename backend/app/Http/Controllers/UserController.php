@@ -91,7 +91,7 @@ class UserController extends Controller
 
     public function getUser(Request $request)
     {
-        return response()->json($request->user());
+        return ResponseFormatter::success($request->user(), 'Data user berhasil diambil');
     }
 
 }
