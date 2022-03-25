@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import {View, Text, Button} from 'react-native'
+import {View, Text, Button, Image, StyleSheet} from 'react-native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -11,6 +11,8 @@ const Profile = ({navigation}) => {
             if(!token){
                 navigation.navigate('Login');
             }
+
+            return token;
         }
 
         getToken();
@@ -38,9 +40,22 @@ const Profile = ({navigation}) => {
 
     return(
         <View>
-            <Button onPress={handleLogout} title='Logout' />
+            <View style={styles.containerImage}>
+                <Image style={styles.image} source={require('../assets/4595687.webp')} />
+            </View>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    containerImage:{
+        // widht:25,
+        // height:25,
+    },
+    image:{
+        width:100,
+        height:100
+    }
+})
 
 export default Profile

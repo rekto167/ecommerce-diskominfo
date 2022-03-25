@@ -88,4 +88,10 @@ class UserController extends Controller
 
         return ResponseFormatter::success($token, 'Token revoked');
     }
+
+    public function getUser(Request $request)
+    {
+        return response()->json($request->user());
+    }
+
 }
