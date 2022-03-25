@@ -3,7 +3,7 @@ import {View, StyleSheet, Text, TextInput, TouchableOpacity, KeyboardAvoidingVie
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Register = () => {
+const Register = ({navigation}) => {
     const [name, setName] = useState('');
     const [username, setUsername] = useState();
     const [email, setEmail] = useState('');

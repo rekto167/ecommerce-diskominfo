@@ -4,7 +4,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const Login = () => {
+const Login = ({navigation}) => {
 
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -25,9 +25,11 @@ const Login = () => {
                 password
             }
 
-            let responseLogin = await axio.post('http://10.0.2.2:8000/api/login', data);
+            let responseLogin = await axios.post('http://10.0.2.2:8000/api/login', data);
 
-            await AsyncStorage.setItem('access_token', responseLogin.data.data.access_token);
+            let token = await AsyncStorage.setItem('access_token', responseLogin.data.data.access_token);
+
+            navigation.navigate('HomeStack');
 
         } catch (error) {
             console.error(error.message);
