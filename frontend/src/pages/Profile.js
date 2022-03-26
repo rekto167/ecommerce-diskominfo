@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {View, Text, Button, Image, StyleSheet} from 'react-native'
+import {View, Text, Button, Image, StyleSheet, TouchableOpacity} from 'react-native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -52,10 +52,13 @@ const Profile = ({navigation}) => {
     return(
         <View>
             <View style={styles.containerImage}>
-                <Image style={styles.image} source={{ uri: `${data.profile_photo_url}` }} />
-                {/* <Image style={styles.image} source={require('../assets/4595687.webp')} /> */}
-                <Button title="Logout" onPress={handleLogout} />
-                <Text>{`${data.profile_photo_url}+?format=png?size=50`}</Text>
+                <TouchableOpacity>
+                    <Image style={styles.image} source={{ uri: `${data.profile_photo_url}` }} />
+                </TouchableOpacity>
+                <View>
+                    <Text style={styles.username}>{data.username}</Text>
+                    <Text style={styles.name}>{data.name}</Text>
+                </View>
             </View>
         </View>
     )
@@ -63,12 +66,27 @@ const Profile = ({navigation}) => {
 
 const styles = StyleSheet.create({
     containerImage:{
-        // widht:25,
-        // height:25,
+        backgroundColor: '#fff',
+        padding: 25,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     image:{
-        width:100,
-        height:100
+        width:80,
+        height:80,
+        borderRadius:50
+    },
+    username:{
+        marginLeft:25,
+        fontFamily:'Poppins-SemiBold',
+        fontSize:18,
+        color: '#000'
+    },
+    name:{
+        marginLeft:25,
+        fontFamily:'Poppins-SemiBold',
+        fontSize:12,
+        color: '#95a5a6'
     }
 })
 
