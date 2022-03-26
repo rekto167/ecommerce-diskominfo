@@ -1,21 +1,34 @@
-import React, {useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import {View, Text, Button, Image, StyleSheet} from 'react-native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = ({navigation}) => {
 
-    useEffect(() => {
-        async function getToken(){
-            let token = await AsyncStorage.getItem('access_token');
-            if(!token){
-                navigation.navigate('Login');
-            }
+    const [data, setData] = useState([]);
 
-            return token;
+    useEffect(() => {
+        async function fetchingData(){
+            try {
+                fetch('http://10.0.2.2:8000/api/user',{
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': await AsyncStorage.getItem('access_token')
+                    }
+                })
+                .then((response) => response.json())
+                .then((json) => {
+                    for(let hasilData in json.data){
+                        setData(json.data, hasilData)
+                    }
+                    console.log(data);
+                })
+            } catch (error) {
+                console.error(error.message);
+            }
         }
 
-        getToken();
+        fetchingData()
     })
 
     const handleLogout = async () => {
@@ -30,9 +43,7 @@ const Profile = ({navigation}) => {
         .then((response) => response.json())
         .then((json) => AsyncStorage.removeItem('access_token'))
 
-        let token = await AsyncStorage.getItem('access_token')
-
-        if(!token){
+        if(await AsyncStorage.getItem('access_token')){
             navigation.navigate('Login')
         }
 
@@ -41,7 +52,10 @@ const Profile = ({navigation}) => {
     return(
         <View>
             <View style={styles.containerImage}>
-                <Image style={styles.image} source={require('../assets/4595687.webp')} />
+                <Image style={styles.image} source={{ uri: `${data.profile_photo_url}` }} />
+                {/* <Image style={styles.image} source={require('../assets/4595687.webp')} /> */}
+                <Button title="Logout" onPress={handleLogout} />
+                <Text>{`${data.profile_photo_url}+?format=png?size=50`}</Text>
             </View>
         </View>
     )

@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import {View, Text, Button,} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const Home = ({navigation}) => {
 
@@ -10,11 +11,10 @@ const Home = ({navigation}) => {
             if(!token){
                 navigation.navigate('Login');
             }
-            console.log(token);
         }
 
         getToken();
-    })
+    },[])
 
     return(
         <View>

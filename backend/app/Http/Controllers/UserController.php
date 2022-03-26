@@ -91,7 +91,11 @@ class UserController extends Controller
 
     public function getUser(Request $request)
     {
-        return ResponseFormatter::success($request->user(), 'Data user berhasil diambil');
+        try {
+            return ResponseFormatter::success($request->user(), 'Data user berhasil diambil');
+        } catch (\Exception $e) {
+            return ResponseFormatter::error($e, 'Failed to get user');
+        }
     }
 
 }
